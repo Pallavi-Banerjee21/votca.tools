@@ -1,0 +1,4 @@
+SUBDIRS = $(VOTCA_BOOST) libtools
+
+CLEANFILES = *~
+
