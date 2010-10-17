@@ -1,4 +1,4 @@
-AC_INIT(votca-tools,1.0,bugs@votca.org)
+AC_INIT(votca-tools,1.0-dev,bugs@votca.org)
 
 AC_CONFIG_AUX_DIR(config)
 AC_CONFIG_MACRO_DIR(config)
@@ -98,6 +98,7 @@ else
 fi
 
 if test "$enable_votca_boost" = "yes"; then
+  AC_ARG_VAR([VOTCA_BOOST_CXXFLAGS],[C++ compiler flags for libvotca_boost, overwrites its CXXFLAGS])
   AC_CONFIG_SUBDIRS(src/libboost)
   AC_SUBST(VOTCA_BOOST,"libboost")
   AC_SUBST(BOOST_CFLAGS,'-I$(top_srcdir)/src/libboost')
