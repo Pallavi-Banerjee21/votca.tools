@@ -4,7 +4,6 @@ syntax:glob
 Makefile
 src/libtools/votca_config.h
 src/libtools/hgversion.h
-src/libtools/linktest
 .project
 .cproject
 libvotca*.pc
@@ -16,9 +15,9 @@ scripts/VOTCARC.csh
 share/doc/Doxyfile
 share/doc/html/*
 share/man/*.man
+src/tools/votca_property
 netbeans/*/build
 */nbproject/private
-CHANGELOG
 CMakeFiles/*
 install_manifest.txt
 cmake_install.cmake
