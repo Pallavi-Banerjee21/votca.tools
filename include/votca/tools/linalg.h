@@ -18,6 +18,16 @@ namespace votca { namespace tools {
     /**
      * \brief solves A*x=b
      * @param x storage for x
+     * @param A symmetric positive definite matrix for linear system
+     * @param b inhomogenity
+     * @param if A is not sysmetrix positive definite throws error code GSL_EDOM
+     *
+     * This function wrapps the cholesky linear system solver
+     */
+    void linalg_cholesky_solve(ub::vector<double> &x, ub::matrix<double> &A, ub::vector<double> &b);
+    /**
+     * \brief solves A*x=b
+     * @param x storage for x
      * @param A matrix for linear equation system
      * @param b inhomogenity
      * @param residual if non-zero, residual will be stored here

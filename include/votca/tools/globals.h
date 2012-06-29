@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2009-2011 The VOTCA Development Team (http://www.votca.org)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,14 +15,26 @@
  *
  */
 
-#include <iostream>
-#include <votca/tools/version.h>
 
-using namespace votca::tools;
-using namespace std;
+#ifndef __VOTCA_TOOLS_GLOBALS_H
+#define	__VOTCA_TOOLS_GLOBALS_H
 
-int main(int argc, char **argv)
+namespace votca { namespace tools {
+
+/**
+    \brief class to store global variables
+
+    This class is used to access global variables 
+*/
+
+class globals
 {
-    cout << "libtools version: " << votca::tools::ToolsVersionStr() << endl;
-}
+    public:  
+	/// be loud and noisy
+        static bool verbose;
+};
+
+}}
+
+#endif	/* __VOTCA_TOOLS_GLOBALS_H */
 
