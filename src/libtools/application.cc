@@ -18,11 +18,14 @@
 #include <iostream>
 #include <votca/tools/application.h>
 #include <votca/tools/version.h>
+#include <votca/tools/globals.h>
 
 namespace votca { namespace tools {
 
+bool globals::verbose = false;
+
 Application::Application()
-    : _op_desc("Allowed options")
+    : _op_desc("Allowed options"), _continue_execution(true)
 {
 }
 
@@ -37,8 +40,12 @@ string Application::VersionString()
 
 void Application::ShowHelpText(std::ostream &out)
 {
-    out << "\t------ VOTCA ( http://www.votca.org ) ------\n"
-        << ProgramName();
+    out << "==================================================\n";
+    out << "========   VOTCA (http://www.votca.org)   ========\n";
+    out << "==================================================\n\n";
+
+    out << "please submit bugs to bugs@votca.org\n\n";
+    out << ProgramName();
     if(VersionString() != "")
         out << ", version " << VersionString();
     out << endl
@@ -52,8 +59,11 @@ void Application::ShowHelpText(std::ostream &out)
 int Application::Exec(int argc, char **argv)
 {
     try {
-        AddProgramOptions()("help,h", "  produce this help message");
-        Initialize(); // initialize program-specific parameters
+        //_continue_execution = true;
+	AddProgramOptions()("help,h", "  display this help and exit");
+	AddProgramOptions()("verbose,v", "  be loud and noisy");
+	
+	Initialize(); // initialize program-specific parameters
 
         ParseCommandLine(argc, argv); // initialize general parameters & read input file
 
@@ -66,8 +76,14 @@ int Application::Exec(int argc, char **argv)
             ShowHelpText(cout);
             return -1;
         }
-        
-        Run();
+
+        if (_op_vm.count("verbose")) {
+	  globals::verbose = true;
+        }
+
+        if(_continue_execution)
+            Run();
+	else cout << "nothing to be done - stopping here\n";
     }
     catch(std::exception &error) {
          cerr << "an error occurred:\n" << error.what() << endl;

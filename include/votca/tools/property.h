@@ -135,8 +135,27 @@ public:
     // throw error and comment (with filename+code line)
     void throwRuntimeError(string message);
 
+    /// \brief output the content in the t2t format
+    void PrintT2T();
+    
+    /**
+     * \brief return attribute as type
+     *
+     * returns an attributee after type conversion, e.g.
+     * p.getAttribute<int>() returns an integer
+     */
+    template<typename T>
+    T getAttribute(const string &attribute);
+
+    /**
+     * \brief set an attribute
+     */
+    template<typename T>
+    void setAttribute(const string &attribute, const T &value);
+
 private:        
     map<string,Property*> _map;
+    map<string,string> _attributes;
     list<Property> _properties;
     
     string _name;
@@ -155,6 +174,9 @@ private:
 stack<Property *> -> stack< Propertz_stack_entry_t>
 */
 };
+
+
+
 
 inline Property &Property::set(const string &key, const string &value)
 {
@@ -236,6 +258,18 @@ inline vector<double> Property::as<vector <double> >() const {
     Tokenizer tok(as<string > (), " ,\n\t");
     tok.ConvertToVector<double>(tmp);
     return tmp;
+}
+
+template<typename T>
+inline T Property::getAttribute(const string &attribute)
+{
+    return lexical_cast<T>(_attributes[attribute], "wrong type in attribute " + attribute + " of element " + _path + "."  + _name + "\n");
+}
+
+template<typename T>
+inline void Property::setAttribute(const string &attribute, const T &value)
+{
+     _attributes[attribute] = lexical_cast<string>(value, "wrong type to set attribute");
 }
 
 inline void throwRuntimeError(string message) {
