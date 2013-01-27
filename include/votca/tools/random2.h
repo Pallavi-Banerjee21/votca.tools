@@ -23,8 +23,8 @@
      uniformly distributed in the range [0,1)
 *************************************************/
 
-#ifndef _RANMARS_H_
-#define _RANMARS_H_
+#ifndef _RANMARS2_H_
+#define _RANMARS2_H_
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -34,27 +34,37 @@
 #define _pi 3.1415926535897932384626433832795
 
 namespace votca { namespace tools {
+
+using namespace std;
+
 /**
   \brief MARSAGLIA pseudo random number generator
 
   This class generates double precision floating point numbers
   uniformly distributed in the range [0,1)
 */
-class Random
+
+class Random2
 {
 public:
-    static void init( int nA1, int nA2, int nA3, int nB1 );    
-    static double rand_uniform( void );
-    static int rand_uniform_int( int max_int );
-    static double rand_gaussian( double sigma );
-    static void save( char *fileName );
-    static void restore( char *fileName );
+
+    Random2() {};
+   ~Random2() {};
+
+    void    init( int nA1, int nA2, int nA3, int nB1 );
+    void    save( char *fileName );
+    void    restore( char *fileName );
+
+    double  rand_uniform( void );
+    int     rand_uniform_int( int max_int );
+    double  rand_gaussian( double sigma );
 
 private:
-    static double  *MARSarray, MARSc, MARScd, MARScm ;
-    static int     MARSi, MARSj ; 
+
+    double  *MARSarray, MARSc, MARScd, MARScm ;
+    int     MARSi, MARSj ; 
 };
 
 }}
 
-#endif	/* _RANMARS_H_ */
+#endif	/* _RANMARS2_H_ */
