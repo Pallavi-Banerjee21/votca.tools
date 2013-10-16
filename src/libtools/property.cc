@@ -162,7 +162,7 @@ bool load_property_from_xml(Property &p, string filename)
   return true;
 }
 
-void PrintNodeTXT(std::ostream &out, Property &p, const int start_level, int level, string prefix, string offset)
+void PrintNodeTXT(std::ostream &out, Property &p, const int start_level, int level=0, string prefix="", string offset="")
 {
     
     list<Property>::iterator iter;
@@ -191,25 +191,31 @@ void PrintNodeTXT(std::ostream &out, Property &p, const int start_level, int lev
     
 }
 
-void PrintNodeXML(std::ostream &out, Property &p, const int start_level, int level, string prefix,  string offset)
+void PrintNodeXML(std::ostream &out, Property &p, PropertyIOManipulator *piom, int level=0, string offset="")
 {
     list<Property>::iterator iter;       
     Property::AttributeIterator ia;
     bool _endl = true;
+
+    const ColorSchemeBase *color = &DEFAULT_COLORS;
+    string indent("");
+    int start_level(0);
     
-        // print starting only from the start_level (the first node (level 0) can be <> </>)
+    if ( piom ) {
+        start_level = piom->getLevel();
+        indent   = piom->getIndentation();
+        color = piom->getColorScheme();
+    }
+    // print starting only from the start_level (the first node (level 0) can be <> </>)
         if ( level >= start_level )  {
             // print the node name
-            out << offset << "<" << p.name();
-            //out << offset << "<" << tools::Colors::Red << p.name() << tools::Colors::Reset;
+            out << indent << offset << "<" << color->Red() << p.name() << color->Reset();
             // print the node attributes 
             for(ia = p.firstAttribute(); ia!=p.lastAttribute(); ++ia) 
-                out << " " 
-                    //<< tools::Colors::Blue << ia->first << tools::Colors::Reset
-                    << ia->first 
+                out << indent << " " 
+                    << color->Blue() << ia->first << color->Reset()
                     << "=\""
-                    //<< tools::Colors::Reset << ia->second << tools::Colors::Reset << "\"" ;
-                    << ia->second << "\"" ;
+                    << color->Reset() << ia->second << color->Reset() << "\"" ;
             out << ">";
             
             // print node value if it is not empty
@@ -231,23 +237,21 @@ void PrintNodeXML(std::ostream &out, Property &p, const int start_level, int lev
         for(iter = p.begin(); iter!=p.end(); ++iter) {
             level++; 
             if (  level > start_level ) offset += "\t"; 
-            PrintNodeXML(out, (*iter), start_level, level, (*iter).name(), offset);
+            PrintNodeXML(out, (*iter), piom, level, offset);
             if (  level > start_level ) offset.resize(offset.size()-1); 
             level--;           
         }
         
         if ( level >= start_level ) {
             if ( _endl ) {
-                //out << offset << "</" << tools::Colors::Red << p.name() << tools::Colors::Reset << ">" << endl;
-                out << offset << "</" << p.name() << ">" << endl;
+                out << indent << offset << "</" << color->Red() << p.name() << color->Reset() << ">" << endl;
             } else {
-                //out << "</" << tools::Colors::Red << p.name() << tools::Colors::Reset << ">" << endl;
-                out << "</" << p.name() << ">" << endl;
+                out << indent << "</" << color->Red() << p.name() << color->Reset() << ">" << endl;
             }
         } 
 }
     
-void PrintNodeTEX(std::ostream &out, Property &p, const int start_level, int level, string prefix,  string offset) {
+void PrintNodeTEX(std::ostream &out, Property &p, PropertyIOManipulator *piom, int level=0, string prefix="") {
 
     
     list<Property>::iterator iter;       
@@ -258,6 +262,13 @@ void PrintNodeTEX(std::ostream &out, Property &p, const int start_level, int lev
     string _default(""); // default value if supplied
     string _unit(""); //unit, if supplied
  
+   const ColorSchemeBase *color = &DEFAULT_COLORS;
+   int start_level(0);
+    
+    if ( piom ) {
+        start_level = piom->getLevel();
+        color = piom->getColorScheme();
+    }
 
     string header_format("\\subsection{%1%}\n"
                          "\\label{%2%}\n%3%\n"
@@ -274,7 +285,7 @@ void PrintNodeTEX(std::ostream &out, Property &p, const int start_level, int lev
     // if this is the head node, print the header
     if ( level == start_level )  {
             head_name = p.name();
-            if ( p.hasAttribute("label") ) _label = p.getAttribute<string>("label");
+            _label = "calc:" + head_name;
             if ( p.hasAttribute("section") ) _section = p.getAttribute<string>("section");
             if ( p.hasAttribute("help") ) _help = p.getAttribute<string>("help");
             out << boost::format(header_format) % head_name % _label % _help;     
@@ -305,11 +316,11 @@ void PrintNodeTEX(std::ostream &out, Property &p, const int start_level, int lev
     for(iter = p.begin(); iter != p.end(); ++iter) {
         if(prefix=="") {
             level++;
-            PrintNodeTEX(out, (*iter), start_level, level, (*iter).name(), offset);
+            PrintNodeTEX(out, (*iter), piom, level, prefix);
             level--;
         } else {
             level++;
-            PrintNodeTEX(out, (*iter), start_level, level, prefix + "." + (*iter).name(), offset);
+            PrintNodeTEX(out, (*iter), piom, level, prefix);
             level--;
         }
     }        
@@ -318,7 +329,7 @@ void PrintNodeTEX(std::ostream &out, Property &p, const int start_level, int lev
     if ( level == start_level )  out << boost::format(footer_format) % _section % head_name;
 }
 
-void PrintNodeHLP(std::ostream &out, Property &p, const int start_level, int level, string prefix,  string offset) {
+void PrintNodeHLP(std::ostream &out, Property &p, const int start_level=0, int level=0, string prefix="",  string offset="") {
      
     list<Property>::iterator iter;       
     string head_name;
@@ -326,26 +337,21 @@ void PrintNodeHLP(std::ostream &out, Property &p, const int start_level, int lev
     string _unit("");
     string _default("");
     string _name("");
-    string fmt( "t|%1%%|15t|\033[34m%2%\033[34m%|40t|\033[32m%3%%|55t|\033[0m%4%\n");
-/*
-#define RESET   "\033[0m"
-#define BLACK   "\033[30m"
-#define RED     "\033[31m"
-#define GREEN   "\033[32m"
-#define YELLOW  "\033[33m"
-#define BLUE    "\033[34m"
-#define MAGENTA "\033[35m"
-#define CYAN    "\033[36m"
-#define WHITE   "\033[37m"
-*/    
+
+    typedef Color<csRGB> ColorRGB; // use the RGB palette
+    ColorRGB RGB; // Instance of an RGB palette
+    string fmt =  "t|%1%%|15t|" + string(RGB.Blue()) + "%2%"
+                                + string(RGB.Green()) + "%|40t|%3%%|55t|"
+                                + string(RGB.Reset()) + "%4%\n";
+        
     int _offset = level;
     
     // if this is the head node, print the header
     if ( level == start_level ) {
-            head_name = tools::Colors::Red + p.name();
+            head_name = string(RGB.Red()) + p.name();
             if ( p.hasAttribute("help") ) {
-                if  ( p.hasAttribute("help") ) _help = tools::Colors::Red + p.getAttribute<string>("help");           
-                out << boost::format(" %1%: %|18t| %2%\033[0m\n") % head_name % _help;
+                if  ( p.hasAttribute("help") ) _help = string(RGB.Red()) + p.getAttribute<string>("help");           
+                out << boost::format(" %1%: %|18t| %2%" + string(RGB.Reset()) + "\n") % head_name % _help;
             }
             _offset=0;
             out << boost::format("%|3" + fmt) % "OPTION" % "DEFAULT" % "UNIT" % "DESCRIPTION";
@@ -406,20 +412,20 @@ std::ostream &operator<<(std::ostream &out, Property& p)
             _indentation = pm->getIndentation();
             _level = pm->getLevel();
             _type = pm->getType();
-        }         
+        }
             
          switch( _type )
         {
         default:
             PrintNodeTXT(out, p, _level);
             case PropertyIOManipulator::XML:
-            PrintNodeXML(out, p, _level, 0, "", _indentation);
+            PrintNodeXML(out, p, pm);
             break;
         case PropertyIOManipulator::TXT:
             PrintNodeTXT(out, p, _level, 0, "", _indentation);
             break;
          case PropertyIOManipulator::TEX:            
-            PrintNodeTEX(out, p, _level);
+            PrintNodeTEX(out, p, pm);
             break;
         case PropertyIOManipulator::HLP:            
             PrintNodeHLP(out, p, _level, 0, "", _indentation);
