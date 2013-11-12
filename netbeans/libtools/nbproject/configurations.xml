@@ -43,6 +43,20 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <logicalFolder name="f1" displayName="linalg_gsl" projectFiles="true">
+        <itemPath>../../src/libtools/linalg/gsl/cholesky.cc</itemPath>
+        <itemPath>../../src/libtools/linalg/gsl/eigensystems.cc</itemPath>
+        <itemPath>../../src/libtools/linalg/gsl/invert.cc</itemPath>
+        <itemPath>../../src/libtools/linalg/gsl/qrsolve.cc</itemPath>
+        <itemPath>../../src/libtools/linalg/gsl/svd.cc</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="linalg_mkl" projectFiles="true">
+        <itemPath>../../src/libtools/linalg/mkl/cholesky.cc</itemPath>
+        <itemPath>../../src/libtools/linalg/mkl/eigensystems.cc</itemPath>
+        <itemPath>../../src/libtools/linalg/mkl/invert.cc</itemPath>
+        <itemPath>../../src/libtools/linalg/mkl/qrsolve.cc</itemPath>
+        <itemPath>../../src/libtools/linalg/mkl/svd.cc</itemPath>
+      </logicalFolder>
       <itemPath>../../src/libtools/akimaspline.cc</itemPath>
       <itemPath>../../src/libtools/application.cc</itemPath>
       <itemPath>../../src/libtools/correlate.cc</itemPath>
@@ -52,7 +66,6 @@
       <itemPath>../../src/libtools/datacollection.cc</itemPath>
       <itemPath>../../src/libtools/histogram.cc</itemPath>
       <itemPath>../../src/libtools/histogramnew.cc</itemPath>
-      <itemPath>../../src/libtools/linalg.cc</itemPath>
       <itemPath>../../src/libtools/linspline.cc</itemPath>
       <itemPath>../../src/libtools/matrix.cc</itemPath>
       <itemPath>../../src/libtools/mutex.cc</itemPath>
@@ -82,7 +95,7 @@
       <toolsSet>
         <compilerSet>GNU|GNU</compilerSet>
         <dependencyChecking>true</dependencyChecking>
-        <rebuildPropChanged>true</rebuildPropChanged>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <cTool>
@@ -253,7 +266,55 @@
       </item>
       <item path="../../src/libtools/histogramnew.cc" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="../../src/libtools/linalg.cc" ex="false" tool="1" flavor2="0">
+      <item path="../../src/libtools/linalg/gsl/cholesky.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../src/libtools/linalg/gsl/eigensystems.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../src/libtools/linalg/gsl/invert.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../src/libtools/linalg/gsl/qrsolve.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../src/libtools/linalg/gsl/svd.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../src/libtools/linalg/mkl/cholesky.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../src/libtools/linalg/mkl/eigensystems.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../src/libtools/linalg/mkl/invert.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../src/libtools/linalg/mkl/qrsolve.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../src/libtools/linalg/mkl/svd.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
       <item path="../../src/libtools/linspline.cc" ex="false" tool="1" flavor2="0">
       </item>
@@ -284,7 +345,7 @@
       <toolsSet>
         <compilerSet>GNU|GNU</compilerSet>
         <dependencyChecking>true</dependencyChecking>
-        <rebuildPropChanged>true</rebuildPropChanged>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <cTool>
@@ -459,7 +520,55 @@
       </item>
       <item path="../../src/libtools/histogramnew.cc" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="../../src/libtools/linalg.cc" ex="false" tool="1" flavor2="0">
+      <item path="../../src/libtools/linalg/gsl/cholesky.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../src/libtools/linalg/gsl/eigensystems.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../src/libtools/linalg/gsl/invert.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../src/libtools/linalg/gsl/qrsolve.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../src/libtools/linalg/gsl/svd.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../src/libtools/linalg/mkl/cholesky.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../src/libtools/linalg/mkl/eigensystems.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../src/libtools/linalg/mkl/invert.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../src/libtools/linalg/mkl/qrsolve.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../src/libtools/linalg/mkl/svd.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
       <item path="../../src/libtools/linspline.cc" ex="false" tool="1" flavor2="0">
       </item>
@@ -490,7 +599,7 @@
       <toolsSet>
         <compilerSet>GNU|GNU</compilerSet>
         <dependencyChecking>true</dependencyChecking>
-        <rebuildPropChanged>true</rebuildPropChanged>
+        <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
         <cTool>
@@ -665,7 +774,55 @@
       </item>
       <item path="../../src/libtools/histogramnew.cc" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="../../src/libtools/linalg.cc" ex="false" tool="1" flavor2="0">
+      <item path="../../src/libtools/linalg/gsl/cholesky.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../src/libtools/linalg/gsl/eigensystems.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../src/libtools/linalg/gsl/invert.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../src/libtools/linalg/gsl/qrsolve.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../src/libtools/linalg/gsl/svd.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../src/libtools/linalg/mkl/cholesky.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../src/libtools/linalg/mkl/eigensystems.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../src/libtools/linalg/mkl/invert.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../src/libtools/linalg/mkl/qrsolve.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="../../src/libtools/linalg/mkl/svd.cc"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
       <item path="../../src/libtools/linspline.cc" ex="false" tool="1" flavor2="0">
       </item>
